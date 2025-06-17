@@ -97,3 +97,55 @@ To fully mock the backend for this flow:
 5. Only after all review cycles and QA merge the `feature/backend-mock` branch into `main` (if authorized).
 
 ---
+
+## 7. **Full Stack Implementation (Optional)**
+
+**If you are a full-stack engineer, we encourage you to implement a complete solution:**
+
+- **Database Integration**: Instead of hardcoded responses, implement a proper database solution:
+    - Use a relational database (PostgreSQL, MySQL) or NoSQL solution (MongoDB) based on your expertise
+    - Implement proper data models with referential integrity between experiments and products
+    - Create seed scripts to populate test data
+
+- **Advanced Features**:
+    - Implement proper data validation and error handling
+    - Add authentication and authorization mechanisms
+    - Include database migrations for schema changes
+    - Set up proper environment configuration
+
+- **Testing & Documentation**:
+    - Write integration tests that test database operations
+    - Document your database schema and relationships
+    - Add API documentation that reflects your actual implementation
+
+This full implementation is optional and goes beyond the core requirements. Even if choosing this path, ensure you follow the branching strategy outlined in section 6.
+
+---
+
+## 8. **Kick-start Project**
+
+- **To save your time, we have created a sample project to kick start your work.**
+  You do not need to spend time configuring the environment or setting up boilerplate code—just focus on implementing the required functionality and tasks as described.
+- Please use the provided structure and dependencies as your base.
+
+---
+
+
+## 9. **Additional Notes**
+
+- A **recorded video** is attached to this task—please use it as a reference for expected API behaviors and edge cases.
+- Use the simple UI design shown in the video to design your database tables according to the functionalities demonstrated.
+- Make sure your implementation handles the flows and behaviors demonstrated in the video.
+- If anything about the API requirements is unclear, refer to the video for clarification before reaching out.
+
+---
+
+## 10. **Summary**
+**Key API endpoints** include:
+- `/experiments` - For listing and retrieving experiments
+- `/products` - For filtered product retrieval with pagination
+- `/products/approve` - For approving one or multiple products
+- `/product-types` - For product type statistics
+- `/experiment/{experimentId}/complete` - For marking experiments complete
+
+---
