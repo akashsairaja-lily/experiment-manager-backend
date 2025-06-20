@@ -39,11 +39,12 @@ The API works with the following core data models:
 
 ## 3. **Backend Mocking Requirements**
 
-- You must **hardcode the API responses**.
+- You must **hardcode the API responses** initially.
+- NOTE: Since this is a backend repository, you are required to integrate a real database (e.g., PostgreSQL, MySQL, or MongoDB) for storing experiments, products, and product types. All API endpoints must perform direct database queries to support filtering, searching, pagination, and status updates.
 - Use **Node.js** and **Express** for the mock server implementation.
 - Your mock endpoints must replicate the full functionality and data structure expected by the frontend (products, experiments, filters, approval actions, etc.).
 - No real database integration is required—just return hardcoded/mock data for all endpoints.
-- If you use **NestJS** (a progressive Node.js framework), this will be considered a **bonus point** as it demonstrates knowledge of scalable backend architecture and TypeScript-first server development.
+  (For a full-stack approach, see section 7 below.)
 
 ---
 
@@ -140,7 +141,11 @@ This full implementation is optional and goes beyond the core requirements. Even
 
 ---
 
-## 10. **Summary**
+## 10. **Demo & sample files**
+
+[Watch Demo Video](/demo/sample.mov)
+
+## 11. **Summary**
 **Key API endpoints** include:
 - `/experiments` - For listing and retrieving experiments
 - `/products` - For filtered product retrieval with pagination
