@@ -37,27 +37,66 @@ The API works with the following core data models:
 
 ---
 
-## 3. **Backend Mocking Requirements**
+## 3. **Implementation Options**
 
-- You must **hardcode the API responses** initially.
-- NOTE: Since this is a backend repository, you are required to integrate a real database (e.g., PostgreSQL, MySQL, or MongoDB) for storing experiments, products, and product types. All API endpoints must perform direct database queries to support filtering, searching, pagination, and status updates.
-- Use **Node.js** and **Express** for the mock server implementation.
-- Your mock endpoints must replicate the full functionality and data structure expected by the frontend (products, experiments, filters, approval actions, etc.).
-- No real database integration is required—just return hardcoded/mock data for all endpoints.
-  (For a full-stack approach, see section 7 below.)
+### 3.1 **For Frontend Engineers: Mock API Implementation**
+
+- Create a mock API server using provided JSON files in `demo/mock/` directory.
+- Use **Node.js** and **Express** or **NestJS** for the mock server implementation.
+- Mock endpoints should replicate the full functionality and data structure as defined in the OpenAPI specification.
+
+### 3.2 **For Backend/Full Stack Engineers: Database Integration**
+
+Backend developers should implement a fully functional API with database integration.
+
+#### Database Options
+
+#### Implementation Steps
+1. Choose your preferred database system
+2. Request the appropriate database setup scripts from the interviewer
+3. Configure your database connection in `src/config/database.config.ts`
+4. Implement the necessary data models and repositories
+
+#### Data Generation and Seeding (Optional)
+When implementing a database-backed solution, you have several options for generating and seeding mock data:
+
+1. **Automatic Seeding on Startup**:
+   - Implement a service that runs on application startup to check if the database is empty
+   - If empty, seed with initial mock data from the JSON files in `demo/mock/`
+   - Example approach:
+     ```typescript
+     // In your app module or a dedicated seeding module
+     @Injectable()
+     export class DataSeedService implements OnModuleInit {
+       async onModuleInit() {
+         const isEmpty = await this.checkIfDbIsEmpty();
+         if (isEmpty) {
+           await this.seedDatabase();
+         }
+       }
+     }
+     ```
+
+2. **Database Migrations**:
+   - Create migration scripts that not only set up the schema but also populate with sample data
+   - This ensures consistent data across all development environments
+   - For TypeORM, place these in a migrations directory with up/down methods
+
+3. **Manual Seeding via CLI**:
+   - Implement a CLI command to seed the database on demand
+   - Useful for testing and development environments
+   - Example command: `npm run seed:db`
+
+4. **Hybrid Approach**:
+   - Use migrations for schema changes
+   - Implement a separate seeding mechanism for test data
+   - Allow different data sets for different environments (dev, test, staging)
+
+Regardless of the approach chosen, ensure that the seeded data matches the structure and relationships expected by the API specification.
 
 ---
 
-## 4. **Mocking Guidance**
-To fully mock the backend for this flow:
-- All experiment, product, and filter data must be mocked.
-- Endpoints for product fetching, approving, and status updates must return realistic payloads.
-- Support search, filtering, pagination, and status change flows in the mock server.
-- Ensure responses are consistent with the OpenAPI specification.
-
----
-
-## 5. **Technical Stack**
+## 4. **Technical Stack**
 
 ### Core Stack
 
@@ -72,10 +111,11 @@ To fully mock the backend for this flow:
 - **Jest**: For unit and integration testing of API endpoints.
 - **Swagger/OpenAPI**: For API documentation.
 - **Prettier & ESLint**: For code linting and formatting.
+- **TypeORM/Mongoose**: For database ORM (Backend/Full Stack implementation)
 
 ---
 
-## 6. **Pull Request and Branching Standards**
+## 5. **Pull Request and Branching Standards**
 
 **It is mandatory to follow these PR and branch management standards for this task:**
 
@@ -96,61 +136,5 @@ To fully mock the backend for this flow:
 3. Implement the products API mock, then raise a PR from `story/products-api` to `feature/backend-mock`.
 4. Repeat for other features or stories.
 5. Only after all review cycles and QA merge the `feature/backend-mock` branch into `main` (if authorized).
-
----
-
-## 7. **Full Stack Implementation (Optional)**
-
-**If you are a full-stack engineer, we encourage you to implement a complete solution:**
-
-- **Database Integration**: Instead of hardcoded responses, implement a proper database solution:
-    - Use a relational database (PostgreSQL, MySQL) or NoSQL solution (MongoDB) based on your expertise
-    - Implement proper data models with referential integrity between experiments and products
-    - Create seed scripts to populate test data
-
-- **Advanced Features**:
-    - Implement proper data validation and error handling
-    - Add authentication and authorization mechanisms
-    - Include database migrations for schema changes
-    - Set up proper environment configuration
-
-- **Testing & Documentation**:
-    - Write integration tests that test database operations
-    - Document your database schema and relationships
-    - Add API documentation that reflects your actual implementation
-
-This full implementation is optional and goes beyond the core requirements. Even if choosing this path, ensure you follow the branching strategy outlined in section 6.
-
----
-
-## 8. **Kick-start Project**
-
-- **To save your time, we have created a sample project to kick start your work.**
-  You do not need to spend time configuring the environment or setting up boilerplate code—just focus on implementing the required functionality and tasks as described.
-- Please use the provided structure and dependencies as your base.
-
----
-
-
-## 9. **Additional Notes**
-
-- A **recorded video** is attached to this task—please use it as a reference for expected API behaviors and edge cases.
-- Use the simple UI design shown in the video to design your database tables according to the functionalities demonstrated.
-- Make sure your implementation handles the flows and behaviors demonstrated in the video.
-- If anything about the API requirements is unclear, refer to the video for clarification before reaching out.
-
----
-
-## 10. **Demo & sample files**
-
-[Watch Demo Video](/demo/sample.mov)
-
-## 11. **Summary**
-**Key API endpoints** include:
-- `/experiments` - For listing and retrieving experiments
-- `/products` - For filtered product retrieval with pagination
-- `/products/approve` - For approving one or multiple products
-- `/product-types` - For product type statistics
-- `/experiment/{experimentId}/complete` - For marking experiments complete
 
 ---
